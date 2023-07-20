@@ -326,17 +326,15 @@
                                         </h2>
                                         <h6> In stuck</h6>
                                       </div>
-                                      <div class="color-varient"><a href="#0"
-                                                                    class="color-name pink">
-                                        <span>Pink</span> </a> <a href="#0"
-                                                                  class="color-name red">
-                                        <span>Red</span> </a>
-                                        <a href="#0"
-                                           class="color-name yellow"><span>Yellow</span>
-                                        </a> <a href="#0" class="color-name blue">
-                                          <span>Blue</span>
-                                        </a> <a href="#0" class="color-name black">
-                                          <span>Black</span> </a></div>
+                                      <div class="color-varient d-flex" style="gap: 5px">
+                                        <template v-for="groupProduct in product.group_products">
+                                            <a href="#" class="d-flex color-name" style="height: 40px; width: 40px;">
+                                              <template v-for="color in groupProduct.colors">
+                                                <div :style="{height: '100%', width: '100%', background: color.title }"></div>
+                                              </template>
+                                            </a>
+                                        </template>
+                                      </div>
                                       <div class="add-product">
                                         <h6>Qty:</h6>
                                         <div class="button-group">
