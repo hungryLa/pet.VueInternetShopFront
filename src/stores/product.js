@@ -17,7 +17,10 @@ export const useProductStore = defineStore('product', {
              await axios.get(`${import.meta.env.VITE_APP_URL}products`)
                 .then(res => {
                     this.products = res.data.data
-                });
+                })
+             .finally(v => {
+                 $(document).trigger('change')
+             })
         },
     },
 })
