@@ -256,47 +256,23 @@
                               <div v-if="productStore.popupProduct" class="container">
                                 <div class="row justify-content-between align-items-center">
                                   <div class="col-lg-6">
-                                    <div class="quick-view__left-content">
+                                    <div class="quick-view__left-content" v-if="productStore.popupProduct.images.length > 2">
                                       <div class="tabs">
                                         <div class="popup-product-thumb-box">
                                           <ul>
-                                            <li
-                                                class="tab-nav popup-product-thumb">
-                                              <a href="#tabb1">
-                                                <img :src="productStore.popupProduct.image_url"
-                                                     alt=""/> </a></li>
-                                            <li
-                                                class="tab-nav popup-product-thumb ">
-                                              <a href="#tabb2">
-                                                <img src="src/assets/images/shop/products-v6-img6.jpg"
-                                                     alt=""/> </a></li>
-                                            <li
-                                                class="tab-nav popup-product-thumb ">
-                                              <a href="#tabb3">
-                                                <img src="src/assets/images/shop/products-v6-img7.jpg"
-                                                     alt=""/> </a></li>
+                                            <li v-for="image in productStore.popupProduct.images" class="tab-nav popup-product-thumb">
+                                              <a :href="`#tabb${image.id}`">
+                                                <img :src="image.url"
+                                                     alt=""/> </a>
+                                            </li>
                                           </ul>
                                         </div>
                                         <div class="popup-product-main-image-box">
-                                          <div id="tabb1"
+                                          <div v-for="image_big in productStore.popupProduct.images" :id="`tabb${image_big.id}`"
                                                class="tab-item popup-product-image">
                                             <div
                                                 class="popup-product-single-image">
-                                              <img :src="productStore.popupProduct.image_url"
-                                                   alt=""/></div>
-                                          </div>
-                                          <div id="tabb2"
-                                               class="tab-item popup-product-image">
-                                            <div
-                                                class="popup-product-single-image">
-                                              <img src="src/assets/images/shop/products-v6-img6.jpg"
-                                                   alt=""/></div>
-                                          </div>
-                                          <div id="tabb3"
-                                               class="tab-item popup-product-image">
-                                            <div
-                                                class="popup-product-single-image">
-                                              <img src="src/assets/images/shop/products-v6-img7.jpg"
+                                              <img :src="image_big.url"
                                                    alt=""/></div>
                                           </div>
                                           <button class="prev"><i
