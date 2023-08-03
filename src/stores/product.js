@@ -10,6 +10,7 @@ export const useProductStore = defineStore('product', {
         return {
             products: null,
             popupProduct: null,
+            filterList: [],
         }
     },
 
@@ -20,8 +21,32 @@ export const useProductStore = defineStore('product', {
                     this.products = res.data.data
                 })
              .finally(v => {
-                 $(document).trigger('change')
+                 $(document).trigger('init')
              })
+        },
+        async getFilterList() {
+            await axios.get(`${import.meta.env.VITE_APP_URL}products/filters`)
+                .then(res => {
+                    this.filterList = res.data
+
+                    //  Price Filter
+                    if ($("#price-range").length) {
+                        $("#price-range").slider({
+                            range: true,
+                            min: this.filterList.price.min,
+                            max: this.filterList.price.max,
+                            values: [this.filterList.price.min, this.filterList.price.max],
+                            slide: function (event, ui) {
+                                $("#priceRange").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                            }
+                        });
+                        $("#priceRange").val("$" + $("#price-range").slider("values", 0) + " - $" + $("#price-range").slider("values", 1));
+                    }
+
+                })
+                .finally(v => {
+                    $(document).trigger('init')
+                })
         },
         async getProduct(id) {
             await axios.get(`${import.meta.env.VITE_APP_URL}products/${id}`)
@@ -30,7 +55,7 @@ export const useProductStore = defineStore('product', {
                     console.log(this.popupProduct)
                 })
                 .finally(v => {
-                    $(document).trigger('change')
+                    $(document).trigger('init')
                 })
         },
     },
